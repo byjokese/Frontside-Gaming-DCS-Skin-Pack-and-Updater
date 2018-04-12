@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSG_DCS_Skin_Installer_Updater", "FSG_DCS_Skin_Installer_Updater\FSG_DCS_Skin_Installer_Updater.csproj", "{2B97C7AF-A024-4E48-B6D1-F682003682B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSG DCS Skin Installer-Updater", "FSG DCS Skin Installer-Updater\FSG DCS Skin Installer-Updater.csproj", "{2BC687F3-FCC8-4C2F-9ECA-17DEDDDFF264}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B97C7AF-A024-4E48-B6D1-F682003682B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B97C7AF-A024-4E48-B6D1-F682003682B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B97C7AF-A024-4E48-B6D1-F682003682B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B97C7AF-A024-4E48-B6D1-F682003682B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BC687F3-FCC8-4C2F-9ECA-17DEDDDFF264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC687F3-FCC8-4C2F-9ECA-17DEDDDFF264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC687F3-FCC8-4C2F-9ECA-17DEDDDFF264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC687F3-FCC8-4C2F-9ECA-17DEDDDFF264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

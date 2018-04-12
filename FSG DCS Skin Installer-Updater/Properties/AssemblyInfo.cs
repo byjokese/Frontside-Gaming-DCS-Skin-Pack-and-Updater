@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FSG_DCS_Skin_Installer_Updater")]
+[assembly: AssemblyTitle("FSG DCS Skin Installer-Updater")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FSG_DCS_Skin_Installer_Updater")]
+[assembly: AssemblyProduct("FSG DCS Skin Installer-Updater")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2b97c7af-a024-4e48-b6d1-f682003682b5")]
+[assembly: Guid("2bc687f3-fcc8-4c2f-9eca-17dedddff264")]
 
 // Version information for an assembly consists of the following four values:
 //
