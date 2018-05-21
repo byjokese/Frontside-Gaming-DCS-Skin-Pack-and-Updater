@@ -30,26 +30,20 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-			this.logTextBox = new System.Windows.Forms.RichTextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.UpdateBtn = new System.Windows.Forms.Button();
-			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.pathText = new System.Windows.Forms.TextBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.CloseBtn = new System.Windows.Forms.Button();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.a10cKneeboardCheck = new System.Windows.Forms.CheckBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.logTextBox = new System.Windows.Forms.TextBox();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.checkBox2 = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
-			// 
-			// logTextBox
-			// 
-			this.logTextBox.Location = new System.Drawing.Point(15, 85);
-			this.logTextBox.Name = "logTextBox";
-			this.logTextBox.ReadOnly = true;
-			this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-			this.logTextBox.Size = new System.Drawing.Size(356, 96);
-			this.logTextBox.TabIndex = 11;
-			this.logTextBox.Text = "";
 			// 
 			// label1
 			// 
@@ -63,7 +57,7 @@
 			// 
 			// UpdateBtn
 			// 
-			this.UpdateBtn.Location = new System.Drawing.Point(377, 83);
+			this.UpdateBtn.Location = new System.Drawing.Point(374, 107);
 			this.UpdateBtn.Name = "UpdateBtn";
 			this.UpdateBtn.Size = new System.Drawing.Size(83, 23);
 			this.UpdateBtn.TabIndex = 9;
@@ -71,14 +65,9 @@
 			this.UpdateBtn.UseVisualStyleBackColor = true;
 			this.UpdateBtn.Click += new System.EventHandler(this.UpdateBtn_Click);
 			// 
-			// contextMenuStrip1
-			// 
-			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-			// 
 			// progressBar1
 			// 
-			this.progressBar1.Location = new System.Drawing.Point(15, 54);
+			this.progressBar1.Location = new System.Drawing.Point(12, 78);
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(443, 23);
 			this.progressBar1.TabIndex = 15;
@@ -103,7 +92,7 @@
 			// CloseBtn
 			// 
 			this.CloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			this.CloseBtn.Location = new System.Drawing.Point(377, 112);
+			this.CloseBtn.Location = new System.Drawing.Point(374, 136);
 			this.CloseBtn.Name = "CloseBtn";
 			this.CloseBtn.Size = new System.Drawing.Size(83, 23);
 			this.CloseBtn.TabIndex = 12;
@@ -118,7 +107,7 @@
 			this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
 			this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBox1.ForeColor = System.Drawing.SystemColors.InfoText;
-			this.richTextBox1.Location = new System.Drawing.Point(15, 188);
+			this.richTextBox1.Location = new System.Drawing.Point(12, 212);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
 			this.richTextBox1.Size = new System.Drawing.Size(439, 15);
@@ -126,13 +115,76 @@
 			this.richTextBox1.Text = "Application designed by By-Jokese for Frontside Gaming (https://frontsidegaming.c" +
     "om/)";
 			// 
+			// a10cKneeboardCheck
+			// 
+			this.a10cKneeboardCheck.AutoSize = true;
+			this.a10cKneeboardCheck.Location = new System.Drawing.Point(117, 55);
+			this.a10cKneeboardCheck.Name = "a10cKneeboardCheck";
+			this.a10cKneeboardCheck.Size = new System.Drawing.Size(110, 17);
+			this.a10cKneeboardCheck.TabIndex = 17;
+			this.a10cKneeboardCheck.Text = "A-10C Kneeboard";
+			this.a10cKneeboardCheck.UseVisualStyleBackColor = true;
+			this.a10cKneeboardCheck.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(12, 56);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(105, 13);
+			this.label2.TabIndex = 18;
+			this.label2.Text = "Optional Downloads:";
+			this.label2.Click += new System.EventHandler(this.label2_Click);
+			// 
+			// logTextBox
+			// 
+			this.logTextBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.logTextBox.Location = new System.Drawing.Point(15, 109);
+			this.logTextBox.Multiline = true;
+			this.logTextBox.Name = "logTextBox";
+			this.logTextBox.ReadOnly = true;
+			this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.logTextBox.Size = new System.Drawing.Size(356, 99);
+			this.logTextBox.TabIndex = 19;
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Enabled = false;
+			this.checkBox1.Location = new System.Drawing.Point(226, 55);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(124, 17);
+			this.checkBox1.TabIndex = 21;
+			this.checkBox1.Text = "M-2000C Kneeboard";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			// 
+			// checkBox2
+			// 
+			this.checkBox2.AutoSize = true;
+			this.checkBox2.Enabled = false;
+			this.checkBox2.Location = new System.Drawing.Point(346, 55);
+			this.checkBox2.Name = "checkBox2";
+			this.checkBox2.Size = new System.Drawing.Size(121, 17);
+			this.checkBox2.TabIndex = 22;
+			this.checkBox2.Text = "F/A-18C Kneeboard";
+			this.checkBox2.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(466, 208);
-			this.Controls.Add(this.richTextBox1);
+			this.ClientSize = new System.Drawing.Size(466, 229);
+			this.Controls.Add(this.checkBox2);
+			this.Controls.Add(this.checkBox1);
 			this.Controls.Add(this.logTextBox);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.a10cKneeboardCheck);
+			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.UpdateBtn);
 			this.Controls.Add(this.progressBar1);
@@ -153,15 +205,18 @@
 
 
 		#endregion
-
-		private System.Windows.Forms.RichTextBox logTextBox;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button UpdateBtn;
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ProgressBar progressBar1;
 		private System.Windows.Forms.TextBox pathText;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button CloseBtn;
 		private System.Windows.Forms.RichTextBox richTextBox1;
+		private System.Windows.Forms.CheckBox a10cKneeboardCheck;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.TextBox logTextBox;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox checkBox2;
 	}
 }
