@@ -22,7 +22,17 @@ namespace FSG_DCS_Skin_Installer_Updater
 			InitializeComponent();
 		}
 
-		private bool downloadsCompleted = false;
+		struct OptionalDownload
+		{
+			public string packageName, folderName;
+			public OptionalDownload(string folder, string package)
+			{
+				this.folderName = folder;
+				this.packageName = package;
+			}
+		}
+		private List<OptionalDownload> optionaldownloads;
+		private int NumberOfDownloadsFinished = 0;
 
 		private void button1_Click(object sender, EventArgs e)
 		{
@@ -36,10 +46,22 @@ namespace FSG_DCS_Skin_Installer_Updater
 		private void UpdateBtn_Click(object sender, EventArgs e)
 		{
 			pathText.ReadOnly = true;
+			Properties.Settings.Default["DCSRootFolder"] = pathText.Text;
+			Properties.Settings.Default.Save();
+
+			optionaldownloads = new List<OptionalDownload>();
+			if (a10cKneeboardCheck.Checked)
+				optionaldownloads.Add(new OptionalDownload("A-10C", "A10C-Kneeboard"));
+			if (m2000KneeboardCheck.Checked)
+				optionaldownloads.Add(new OptionalDownload("M-2000C", "M2000-Kneeboard"));
+			if (f18cKneeboardCheck.Checked)
+				optionaldownloads.Add(new OptionalDownload("F/A-18", "F/A-18C-Kneeboard"));
+
 			string versionNum = GetLastestVersionNumber();
 			logTextBox.AppendText("Downloading Version: " + versionNum + "\n");
 			//Download lastest version from github repository
 			MakeDownload(versionNum);
+			//prepareOptionalDownloads();
 		}
 
 		private void CloseBtn_Click(object sender, EventArgs e)
@@ -74,7 +96,7 @@ namespace FSG_DCS_Skin_Installer_Updater
 
 		private void MakeDownload(string versionNumber)
 		{
-			string download_url = "https://github.com/FrontsideGaming/Frontside-Gaming-DCS-Skin-Pack-and-Updater/releases/download/v" + versionNumber + "/SkinPack_1.0.0.zip";
+			string download_url = "https://github.com/byjokese/Frontside-Gaming-DCS-Skin-Pack-and-Updater/releases/download/v" + versionNumber + "/SkinPack_1.0.0.zip";
 			Thread thread = new Thread(() => {
 				System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
 				WebClient webClient = new WebClient();
@@ -82,32 +104,53 @@ namespace FSG_DCS_Skin_Installer_Updater
 				webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
 				webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
 				Uri serverUri = new Uri("https://github.com");
-				Uri relativeUri = new Uri("FrontsideGaming/Frontside-Gaming-DCS-Skin-Pack-and-Updater/releases/download/v" + versionNumber + "/SkinPack_"+ versionNumber + ".zip", UriKind.Relative);
+				Uri relativeUri = new Uri("byjokese/Frontside-Gaming-DCS-Skin-Pack-and-Updater/releases/download/v" + versionNumber + "/SkinPack_"+ versionNumber + ".zip", UriKind.Relative);
 				Uri fullUri = new Uri(serverUri, relativeUri);
-				webClient.DownloadFileAsync(fullUri, @"" + pathText.Text + "\\Bazar\\Liveries\\Temp.zip");
+				try
+				{
+					webClient.DownloadFileAsync(fullUri, @"" + pathText.Text + "\\Bazar\\Liveries\\Temp.zip");
+				}
+					catch (WebException e)
+				{
+					logTextBox.AppendText(e.ToString());
+					logTextBox.AppendText("Download failed. Skipping Skin Download...\n");
+
+				}
 			});
 			thread.Start();
 		}
 
-		private void MakeOptionalDownloads(string versionNumber)
+		private void MakeOptionalDownload(string versionNumber, OptionalDownload optionalPackage)
 		{
-			if (a10cKneeboardCheck.Checked)
+			/*this.BeginInvoke((MethodInvoker)delegate
 			{
-				logTextBox.AppendText("Downloading A-10C Kneeboard...\n");
-				string download_url_a10c = "https://github.com/FrontsideGaming/Frontside-Gaming-DCS-Skin-Pack-and-Updater/releases/download/v" + versionNumber + "/A10C-Kneeboard.zip";
-				Thread threadA10 = new Thread(() => {
-					System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
-					WebClient webClientA10 = new WebClient();
-					webClientA10.Headers.Add("user-agent", "Anything");
-					webClientA10.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-					webClientA10.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadOptionalFilesCompleted);
-					Uri serverUri = new Uri("https://github.com");
-					Uri relativeUri = new Uri("FrontsideGaming/Frontside-Gaming-DCS-Skin-Pack-and-Updater/releases/download/v" + versionNumber + "/A10C-Kneeboard.zip", UriKind.Relative);
-					Uri fullUri = new Uri(serverUri, relativeUri);
-					webClientA10.DownloadFileAsync(fullUri, @"" + "C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\A-10C\\Temp.zip");
-				});
-				threadA10.Start();
-			}
+				logTextBox.AppendText("Downloading " + optionalPackage.folderName + " Kneeboard...\n");
+			});*/
+			string download_url_a10c = "https://github.com/byjokese/Frontside-Gaming-DCS-Skin-Pack-and-Updater/releases/download/v" + versionNumber + "/" + optionalPackage.packageName + ".zip";
+			Thread thread = new Thread(() => {
+				System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
+				WebClient webClient = new WebClient();
+				webClient.Headers.Add("user-agent", "Anything");
+				webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+				webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadOptionalFilesCompleted);
+				Uri serverUri = new Uri("https://github.com");
+				Uri relativeUri = new Uri("byjokese/Frontside-Gaming-DCS-Skin-Pack-and-Updater/releases/download/v" + versionNumber + "/" + optionalPackage.packageName + ".zip", UriKind.Relative);
+				Uri fullUri = new Uri(serverUri, relativeUri);
+				try
+				{
+					webClient.DownloadFileAsync(fullUri, @"C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\" + optionalPackage.folderName + "\\Temp.zip");
+				}
+				catch (WebException e)
+				{
+					this.BeginInvoke((MethodInvoker)delegate
+					{
+						logTextBox.AppendText(e.ToString());
+						logTextBox.AppendText(optionalPackage.folderName + "Download failed. Skipping...\n");
+					});
+				}
+			});
+			thread.Start();
+			//threadA10.Join();
 		}
 
 		void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -116,15 +159,19 @@ namespace FSG_DCS_Skin_Installer_Updater
 				double bytesIn = double.Parse(e.BytesReceived.ToString());
 				double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
 				double percentage = bytesIn / totalBytes * 100;
-				//logTextBox.AppendText("Downloaded " + e.BytesReceived + " of " + e.TotalBytesToReceive);
+				ProgressText_lbl.Text = "Downloaded " + e.BytesReceived + " of " + e.TotalBytesToReceive + " Bytes";
 				progressBar1.Value = int.Parse(Math.Truncate(percentage).ToString());
 			});
 		}
 		void client_DownloadOptionalFilesCompleted(object sender, AsyncCompletedEventArgs e)
 		{
 			this.BeginInvoke((MethodInvoker)delegate {
-				logTextBox.AppendText("Optional Packages Downloads Finished.\n");
-				ExtractFilesAndCopy();
+				NumberOfDownloadsFinished++;
+				if(optionaldownloads.Count == NumberOfDownloadsFinished)
+				{
+					logTextBox.AppendText("Optional Packages Downloads Finished.\n");
+					ExtractFilesAndCopy();
+				}
 			});
 		}
 
@@ -133,16 +180,29 @@ namespace FSG_DCS_Skin_Installer_Updater
 			this.BeginInvoke((MethodInvoker)delegate {
 				logTextBox.AppendText("Download Completed\n");
 				//Reset Progress Bar and Download Optionals
-				if (a10cKneeboardCheck.Checked){
-					logTextBox.AppendText("Downloading Optional Packages\n");
-					MakeOptionalDownloads(GetLastestVersionNumber());
-				}else{
-					downloadsCompleted = true;
-				}
-				//Extract the files and copy to DCS Directory.
-				if (downloadsCompleted)
-					ExtractFilesAndCopy();
+				prepareOptionalDownloads();
 			});
+		}
+
+		private void prepareOptionalDownloads()
+		{
+			logTextBox.AppendText("Downloading Optional Packages\n");
+			NumberOfDownloadsFinished = 0;
+			//int currentDownload = 0;
+			if (optionaldownloads.Count > 0)
+			{
+				foreach (OptionalDownload optionalPackage in optionaldownloads)
+				{
+					string versionNumber = GetLastestVersionNumber();
+					MakeOptionalDownload(versionNumber, optionalPackage);
+				}
+				/*string versionNumber = GetLastestVersionNumber();
+				MakeOptionalDownload(versionNumber, optionaldownloads[0]);*/
+			}
+			else
+			{
+				ExtractFilesAndCopy();
+			}
 		}
 
 		private void ExtractFilesAndCopy()
@@ -166,9 +226,15 @@ namespace FSG_DCS_Skin_Installer_Updater
 			logTextBox.AppendText("Deleting Temporal Files...\n");
 			File.Delete("" + pathText.Text + "\\Bazar\\Liveries\\Temp.zip");
 
-			if (a10cKneeboardCheck.Checked){
+			foreach (OptionalDownload optionalPackage in optionaldownloads) {
 				//Extrat A-10C Files
-				ZipStorer zipA10 = ZipStorer.Open(@"" + "C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\A-10C\\Temp.zip", FileAccess.Read);
+				string path = "C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\" + optionalPackage.folderName;
+				if (!Directory.Exists(path))
+				{
+					// Try to create the directory.
+					DirectoryInfo di = Directory.CreateDirectory(path);
+				}
+				ZipStorer zipA10 = ZipStorer.Open("C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\" + optionalPackage.folderName + "\\Temp.zip", FileAccess.Read);
 				List<ZipStorer.ZipFileEntry> dirA10 = zipA10.ReadCentralDir();
 				// Look for the desired file
 				int fileNumberA10 = 0;
@@ -178,13 +244,13 @@ namespace FSG_DCS_Skin_Installer_Updater
 					//Deleting the first folder for extraction
 					string fileName = entry.FilenameInZip;
 					logTextBox.AppendText("Extracting: " + fileName + "\n");
-					zipA10.ExtractFile(entry, "C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\A-10C\\" + fileName);
+					zipA10.ExtractFile(entry, "C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\" + optionalPackage.folderName + "\\" + fileName);
 					progressBar1.Value = ((fileNumberA10++ / dirA10.Count()) * 100);
 				}
 				zipA10.Close();
-				logTextBox.AppendText("All Optional Files Extracted\n");
-				logTextBox.AppendText("Deleting Optional Temporal Files...\n");
-				File.Delete("C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\A-10C\\Temp.zip");
+				logTextBox.AppendText(optionalPackage.packageName + " Optional Files Extracted\n");
+				logTextBox.AppendText("Deleting "+ optionalPackage.packageName + " Optional Temporal Files...\n");
+				File.Delete("C:\\Users\\" + Environment.UserName + "\\Saved Games\\DCS\\Kneeboard\\" + optionalPackage.folderName + "\\Temp.zip");
 			}
 			logTextBox.AppendText("Update/Install Proccess COMPLETED\n");
 			pathText.ReadOnly = false;
@@ -202,6 +268,11 @@ namespace FSG_DCS_Skin_Installer_Updater
 		}
 
 		private void label2_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void progressBar1_Click(object sender, EventArgs e)
 		{
 
 		}

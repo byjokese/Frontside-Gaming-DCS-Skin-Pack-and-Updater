@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.label1 = new System.Windows.Forms.Label();
 			this.UpdateBtn = new System.Windows.Forms.Button();
@@ -40,9 +39,10 @@
 			this.a10cKneeboardCheck = new System.Windows.Forms.CheckBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.logTextBox = new System.Windows.Forms.TextBox();
-			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
-			this.checkBox2 = new System.Windows.Forms.CheckBox();
+			this.m2000KneeboardCheck = new System.Windows.Forms.CheckBox();
+			this.f18cKneeboardCheck = new System.Windows.Forms.CheckBox();
+			this.ProgressText = new System.Windows.Forms.Label();
+			this.ProgressText_lbl = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -57,9 +57,9 @@
 			// 
 			// UpdateBtn
 			// 
-			this.UpdateBtn.Location = new System.Drawing.Point(374, 107);
+			this.UpdateBtn.Location = new System.Drawing.Point(371, 120);
 			this.UpdateBtn.Name = "UpdateBtn";
-			this.UpdateBtn.Size = new System.Drawing.Size(83, 23);
+			this.UpdateBtn.Size = new System.Drawing.Size(86, 23);
 			this.UpdateBtn.TabIndex = 9;
 			this.UpdateBtn.Text = "Install/Update";
 			this.UpdateBtn.UseVisualStyleBackColor = true;
@@ -69,8 +69,9 @@
 			// 
 			this.progressBar1.Location = new System.Drawing.Point(12, 78);
 			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(443, 23);
+			this.progressBar1.Size = new System.Drawing.Size(448, 23);
 			this.progressBar1.TabIndex = 15;
+			this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
 			// 
 			// pathText
 			// 
@@ -78,6 +79,7 @@
 			this.pathText.Name = "pathText";
 			this.pathText.Size = new System.Drawing.Size(356, 20);
 			this.pathText.TabIndex = 14;
+			this.pathText.Text = global::FSG_DCS_Skin_Installer_Updater.Properties.Settings.Default.DCSRootFolder;
 			// 
 			// button1
 			// 
@@ -92,9 +94,9 @@
 			// CloseBtn
 			// 
 			this.CloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			this.CloseBtn.Location = new System.Drawing.Point(374, 136);
+			this.CloseBtn.Location = new System.Drawing.Point(371, 149);
 			this.CloseBtn.Name = "CloseBtn";
-			this.CloseBtn.Size = new System.Drawing.Size(83, 23);
+			this.CloseBtn.Size = new System.Drawing.Size(86, 23);
 			this.CloseBtn.TabIndex = 12;
 			this.CloseBtn.Text = "Close";
 			this.CloseBtn.UseVisualStyleBackColor = true;
@@ -107,7 +109,7 @@
 			this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
 			this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBox1.ForeColor = System.Drawing.SystemColors.InfoText;
-			this.richTextBox1.Location = new System.Drawing.Point(12, 212);
+			this.richTextBox1.Location = new System.Drawing.Point(9, 225);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
 			this.richTextBox1.Size = new System.Drawing.Size(439, 15);
@@ -139,7 +141,7 @@
 			// logTextBox
 			// 
 			this.logTextBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-			this.logTextBox.Location = new System.Drawing.Point(15, 109);
+			this.logTextBox.Location = new System.Drawing.Point(12, 122);
 			this.logTextBox.Multiline = true;
 			this.logTextBox.Name = "logTextBox";
 			this.logTextBox.ReadOnly = true;
@@ -147,40 +149,55 @@
 			this.logTextBox.Size = new System.Drawing.Size(356, 99);
 			this.logTextBox.TabIndex = 19;
 			// 
-			// contextMenuStrip1
+			// m2000KneeboardCheck
 			// 
-			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+			this.m2000KneeboardCheck.AutoSize = true;
+			this.m2000KneeboardCheck.Location = new System.Drawing.Point(226, 55);
+			this.m2000KneeboardCheck.Name = "m2000KneeboardCheck";
+			this.m2000KneeboardCheck.Size = new System.Drawing.Size(124, 17);
+			this.m2000KneeboardCheck.TabIndex = 21;
+			this.m2000KneeboardCheck.Text = "M-2000C Kneeboard";
+			this.m2000KneeboardCheck.UseVisualStyleBackColor = true;
 			// 
-			// checkBox1
+			// f18cKneeboardCheck
 			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Enabled = false;
-			this.checkBox1.Location = new System.Drawing.Point(226, 55);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(124, 17);
-			this.checkBox1.TabIndex = 21;
-			this.checkBox1.Text = "M-2000C Kneeboard";
-			this.checkBox1.UseVisualStyleBackColor = true;
+			this.f18cKneeboardCheck.AutoSize = true;
+			this.f18cKneeboardCheck.Enabled = false;
+			this.f18cKneeboardCheck.Location = new System.Drawing.Point(346, 55);
+			this.f18cKneeboardCheck.Name = "f18cKneeboardCheck";
+			this.f18cKneeboardCheck.Size = new System.Drawing.Size(121, 17);
+			this.f18cKneeboardCheck.TabIndex = 22;
+			this.f18cKneeboardCheck.Text = "F/A-18C Kneeboard";
+			this.f18cKneeboardCheck.UseVisualStyleBackColor = true;
 			// 
-			// checkBox2
+			// ProgressText
 			// 
-			this.checkBox2.AutoSize = true;
-			this.checkBox2.Enabled = false;
-			this.checkBox2.Location = new System.Drawing.Point(346, 55);
-			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(121, 17);
-			this.checkBox2.TabIndex = 22;
-			this.checkBox2.Text = "F/A-18C Kneeboard";
-			this.checkBox2.UseVisualStyleBackColor = true;
+			this.ProgressText.AutoSize = true;
+			this.ProgressText.BackColor = System.Drawing.Color.Transparent;
+			this.ProgressText.Location = new System.Drawing.Point(197, 83);
+			this.ProgressText.Name = "ProgressText";
+			this.ProgressText.Size = new System.Drawing.Size(0, 13);
+			this.ProgressText.TabIndex = 23;
+			this.ProgressText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// ProgressText_lbl
+			// 
+			this.ProgressText_lbl.AutoSize = true;
+			this.ProgressText_lbl.Location = new System.Drawing.Point(9, 106);
+			this.ProgressText_lbl.Name = "ProgressText_lbl";
+			this.ProgressText_lbl.Size = new System.Drawing.Size(129, 13);
+			this.ProgressText_lbl.TabIndex = 24;
+			this.ProgressText_lbl.Text = "Downloaded: -- of -- Bytes";
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(466, 229);
-			this.Controls.Add(this.checkBox2);
-			this.Controls.Add(this.checkBox1);
+			this.ClientSize = new System.Drawing.Size(472, 242);
+			this.Controls.Add(this.ProgressText_lbl);
+			this.Controls.Add(this.ProgressText);
+			this.Controls.Add(this.f18cKneeboardCheck);
+			this.Controls.Add(this.m2000KneeboardCheck);
 			this.Controls.Add(this.logTextBox);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.a10cKneeboardCheck);
@@ -215,8 +232,9 @@
 		private System.Windows.Forms.CheckBox a10cKneeboardCheck;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox logTextBox;
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-		private System.Windows.Forms.CheckBox checkBox1;
-		private System.Windows.Forms.CheckBox checkBox2;
+		private System.Windows.Forms.CheckBox m2000KneeboardCheck;
+		private System.Windows.Forms.CheckBox f18cKneeboardCheck;
+		private System.Windows.Forms.Label ProgressText;
+		private System.Windows.Forms.Label ProgressText_lbl;
 	}
 }
